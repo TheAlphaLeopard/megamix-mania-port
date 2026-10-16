@@ -1,0 +1,33 @@
+{
+  "file": "RSDKv5U.data",
+  "totalSize": 247953543,
+  "chunkSize": 50000000,
+  "parts": [
+    {
+      "name": "chunks/RSDKv5U.data.p000",
+      "size": 50000000,
+      "sha256": "f272940e2f3c9a3cb76af4e3e5c787fa93723065b9d03e5c2742401c50ae3080"
+    },
+    {
+      "name": "chunks/RSDKv5U.data.p001",
+      "size": 50000000,
+      "sha256": "9250ac1faef3de0ab959ee663d0226416f5a685c0418ec69a767c787de665a94"
+    },
+    {
+      "name": "chunks/RSDKv5U.data.p002",
+      "size": 50000000,
+      "sha256": "5cbab9c05e55a0b2502c88a38992cc33347d8d5501f684ce55ecad30eee63c6a"
+    },
+    {
+      "name": "chunks/RSDKv5U.data.p003",
+      "size": 50000000,
+      "sha256": "c13bbab2f282c995b8e09d5619fd24e8682097f62b43462f9c4c40e55783d64d"
+    },
+    {
+      "name": "chunks/RSDKv5U.data.p004",
+      "size": 47953543,
+      "sha256": "856f952a34c48c2c7e47b202bc0a3be59ea84411336c187b5a936b42c45a3477"
+    }
+  ],
+  "sha256": "19d5b9c617e219dab77474f36f038b0356c85d5f37cd613b8bce3c54fbf414b7"
+}
