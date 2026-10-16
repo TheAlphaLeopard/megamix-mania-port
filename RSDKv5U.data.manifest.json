@@ -1,32 +1,77 @@
 {
   "file": "RSDKv5U.data",
   "totalSize": 247953543,
-  "chunkSize": 50000000,
+  "chunkSize": 18000000,
   "parts": [
     {
       "name": "chunks/RSDKv5U.data.p000",
-      "size": 50000000,
-      "sha256": "f272940e2f3c9a3cb76af4e3e5c787fa93723065b9d03e5c2742401c50ae3080"
+      "size": 18000000,
+      "sha256": "7e59c105b3f2e71cba4382b0176a8f3724650591cac8d1c455a425e3ff536398"
     },
     {
       "name": "chunks/RSDKv5U.data.p001",
-      "size": 50000000,
-      "sha256": "9250ac1faef3de0ab959ee663d0226416f5a685c0418ec69a767c787de665a94"
+      "size": 18000000,
+      "sha256": "e82be0e08fb028ed75affc3e0574299c0390c807e2abc01b989e19a728293230"
     },
     {
       "name": "chunks/RSDKv5U.data.p002",
-      "size": 50000000,
-      "sha256": "5cbab9c05e55a0b2502c88a38992cc33347d8d5501f684ce55ecad30eee63c6a"
+      "size": 18000000,
+      "sha256": "55503d4997928b0edb282d94364b9714168620a2e02314f2fadf56c16b504eee"
     },
     {
       "name": "chunks/RSDKv5U.data.p003",
-      "size": 50000000,
-      "sha256": "c13bbab2f282c995b8e09d5619fd24e8682097f62b43462f9c4c40e55783d64d"
+      "size": 18000000,
+      "sha256": "6efb1723056238457afad297b1a780af8a36d28cfb3949e3ee16018b955ce0cb"
     },
     {
       "name": "chunks/RSDKv5U.data.p004",
-      "size": 47953543,
-      "sha256": "856f952a34c48c2c7e47b202bc0a3be59ea84411336c187b5a936b42c45a3477"
+      "size": 18000000,
+      "sha256": "b1ef7da7c4f19a094c1503db9937c1e686c10a4150a0d76c8db42869368a2fd5"
+    },
+    {
+      "name": "chunks/RSDKv5U.data.p005",
+      "size": 18000000,
+      "sha256": "5dc157ac8b2c7d1b616e934a6246d2ea6d79dc7f0511a3b4695b2167b86cb85f"
+    },
+    {
+      "name": "chunks/RSDKv5U.data.p006",
+      "size": 18000000,
+      "sha256": "597dc0d2828df44ac0ee8c35e658fb20f88bb3f12bc814577a467d53945cde28"
+    },
+    {
+      "name": "chunks/RSDKv5U.data.p007",
+      "size": 18000000,
+      "sha256": "4d85a4230efef8219879852a222e31626b74d13c27dafcf39d135ca76477c8cb"
+    },
+    {
+      "name": "chunks/RSDKv5U.data.p008",
+      "size": 18000000,
+      "sha256": "5075e919d6b4acedb708594dc2ebfcee8775c2f5eee4197ee14eca05e74fba9a"
+    },
+    {
+      "name": "chunks/RSDKv5U.data.p009",
+      "size": 18000000,
+      "sha256": "78dc435f3771ec3a5dac5f824afd1f56249398777c4a9156cb8d02b7f13ddbf1"
+    },
+    {
+      "name": "chunks/RSDKv5U.data.p010",
+      "size": 18000000,
+      "sha256": "0bf956debd43ccaea9ec5c26d89171114e5f32ced22114870e498ea02f8cc7c2"
+    },
+    {
+      "name": "chunks/RSDKv5U.data.p011",
+      "size": 18000000,
+      "sha256": "a71eb11955600e286b18a612ff82fbe866b1b082311e6798727de91184d3ee07"
+    },
+    {
+      "name": "chunks/RSDKv5U.data.p012",
+      "size": 18000000,
+      "sha256": "d3cb520bbeed8adaf8287082d92e4ceedbc06750752df24133f2c03df119bd62"
+    },
+    {
+      "name": "chunks/RSDKv5U.data.p013",
+      "size": 13953543,
+      "sha256": "57d23a55392cfb096f6c88f563fcb350c1abc2f68cab435c87cbc1e67b4e6c1b"
     }
   ],
   "sha256": "19d5b9c617e219dab77474f36f038b0356c85d5f37cd613b8bce3c54fbf414b7"
