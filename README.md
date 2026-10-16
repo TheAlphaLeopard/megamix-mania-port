@@ -1,2 +1,2 @@
-# megamix-mania-port
-sonic megamix mania web port (finally got it) [not my port, thanks to https://kbhgames.com]
+# Sonic: Megamix Mania
+sonic megamix mania web port (finally got it, only took me two failed attempts and a quick google search) [thanks again to https://kbhgames.com]
