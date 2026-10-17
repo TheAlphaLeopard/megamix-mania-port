@@ -228,6 +228,20 @@
         statusEl.classList.toggle("err", !!isErr);
       }
 
+      function showEngineError(msg) {
+        if (!msg || document.body.classList.contains("engine-ready")) return;
+        var t = String(msg);
+        if (t.length > 400) t = t.slice(0, 400) + "\u2026";
+        setStatus("Engine error:\n" + t, true);
+      }
+      window.addEventListener("error", function (e) {
+        showEngineError(e && e.message ? e.message : e);
+      });
+      window.addEventListener("unhandledrejection", function (e) {
+        var r = e && e.reason;
+        showEngineError(r && r.message ? r.message : r);
+      });
+
       function fitCanvasToViewport() {
         if (!canvas) return;
         var explicit = canvas.hasAttribute("width") && canvas.hasAttribute("height");
@@ -349,6 +363,32 @@
           );
           return;
         }
+        /* Pre-flight: some hosts (online HTML viewers that iframe files) send a
+         * Content-Security-Policy without 'wasm-unsafe-eval', which silently
+         * blocks WebAssembly compilation — the engine aborts before rendering.
+         * Detect that NOW and say so, instead of dying quietly later. */
+        var wasmOK = false;
+        try {
+          /* NOTE: WebAssembly.validate() is NOT CSP-gated in Chrome (it only
+           * parses, never compiles) — it reports "ok" even under a blocking
+           * CSP. The Module constructor is the real test: it compiles, and
+           * throws the exact CSP violation if blocked. Tiny module = instant. */
+          new WebAssembly.Module(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0]));
+          wasmOK = true;
+        } catch (e) {
+          wasmOK = false;
+        }
+        if (!wasmOK) {
+          setStatus(
+            "This site blocks WebAssembly (Content-Security-Policy),\n" +
+            "so the game engine cannot start here.\n\n" +
+            "Fix: host this HTML file on a normal static host instead —\n" +
+            "e.g. enable GitHub Pages on the same repo (Settings > Pages)\n" +
+            "and open that URL.",
+            true
+          );
+          return;
+        }
         try {
           var AC = window.AudioContext || window.webkitAudioContext;
           if (AC) {
@@ -371,6 +411,18 @@
             return;
           }
           ready.then(function () {
+            /* Surface engine-level failures (wasm/CSP aborts etc.) in the
+             * status box instead of only the console. */
+            if (window.Module) {
+              var prevPrintErr = window.Module.printErr;
+              window.Module.printErr = function (text) {
+                if (prevPrintErr) prevPrintErr(text);
+                showEngineError(text);
+              };
+              window.Module.onAbort = function (text) {
+                showEngineError("Engine aborted: " + (text || "unknown reason"));
+              };
+            }
             var eng = document.createElement("script");
             eng.src = CDN_BASE + "RSDKv5U.js";
             eng.async = true;

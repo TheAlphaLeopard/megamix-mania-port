@@ -69,9 +69,37 @@
     return out;
   }
 
+  /* Retry helper: CDNs (jsDelivr/Fastly in particular) intermittently serve
+   * transient 403/5xx on large-object fetches. Retry with backoff instead of
+   * failing the whole load. */
+  var RETRY_DELAYS_MS = [800, 2000, 4500, 9000, 15000];
+  function wait(ms) {
+    return new Promise(function (res) { setTimeout(res, ms); });
+  }
+  async function fetchRetry(url, opts, label) {
+    var lastErr = null;
+    for (var attempt = 0; attempt <= RETRY_DELAYS_MS.length; attempt++) {
+      try {
+        var r = await fetch(url, opts || {});
+        if (r.ok) return r;
+        lastErr = new Error("fetch " + (label || url) + " failed: " + r.status);
+        // 404 = really missing, don't hammer the CDN
+        if (r.status === 404) throw lastErr;
+      } catch (e) {
+        lastErr = e;
+        if (e && e.message && e.message.indexOf("failed: 404") !== -1) throw e;
+      }
+      if (attempt < RETRY_DELAYS_MS.length) {
+        console.warn("[dataloader] " + (label || url) + " attempt " + (attempt + 1) + " failed, retrying in " + RETRY_DELAYS_MS[attempt] + "ms");
+        await wait(RETRY_DELAYS_MS[attempt]);
+      }
+    }
+    throw lastErr;
+  }
+
   async function headOk(url) {
     try {
-      var r = await fetch(url, { method: "HEAD", cache: "no-cache" });
+      var r = await fetchRetry(url, { method: "HEAD", cache: "no-cache" }, "HEAD " + url);
       return r.ok;
     } catch (e) {
       return false;
@@ -92,7 +120,7 @@
     // }
 
     var actualUrl = url;
-    var resp = await fetch(actualUrl);
+    var resp = await fetchRetry(actualUrl, {}, "chunk " + url);
     if (!resp.ok) throw new Error("fetch " + actualUrl + " failed: " + resp.status);
 
     if (useGz) {
@@ -177,7 +205,7 @@
     }
 
     if (await headOk(mmxJoin(DATA_MANIFEST_URL))) {
-      var manifestResp = await fetch(mmxJoin(DATA_MANIFEST_URL), { cache: "no-cache" });
+      var manifestResp = await fetchRetry(mmxJoin(DATA_MANIFEST_URL), { cache: "no-cache" }, "manifest");
       var manifest = await manifestResp.json();
       if (!manifest || !Array.isArray(manifest.parts) || manifest.parts.length === 0) {
         throw new Error("manifest is empty or malformed");
