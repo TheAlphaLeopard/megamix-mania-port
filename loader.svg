@@ -285,6 +285,29 @@
       var CDN_BASE = "";
       window.__MMX_BASE__ = CDN_BASE;
 
+      /* --- [mmx] engine call-home shim -------------------------------------
+       * The engine binary phones home to https://kdata1.com/api/... as part
+       * of a signed license handshake. That server only sends
+       * Access-Control-Allow-Origin: https://kdata1.com, so from any other
+       * origin the request is CORS-blocked (console errors + a failed
+       * handshake). Answering it locally with an empty 204 keeps the engine
+       * happy and the console clean; no data ever leaves the browser.
+       * -------------------------------------------------------------------- */
+      (function () {
+        var origFetch = window.fetch ? window.fetch.bind(window) : null;
+        if (!origFetch) return;
+        window.fetch = function (input, init) {
+          try {
+            var url = typeof input === "string" ? input : (input && input.url) || "";
+            if (/^https?:\/\/([^\/]*\.)?kdata1\.com\/api\//i.test(url)) {
+              return Promise.resolve(
+                new Response("", { status: 200, statusText: "OK" }));
+            }
+          } catch (e) { /* fall through to real fetch */ }
+          return origFetch(input, init);
+        };
+      })();
+
       var fsBtn = document.getElementById("fs-btn");
       var canvas = document.getElementById("canvas");
       var statusEl = document.getElementById("loader-status");
